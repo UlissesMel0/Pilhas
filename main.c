@@ -3,27 +3,27 @@
 
 FILE *fl;
 
-typedef struct pilha
+typedef struct stack
 {
  int elem;
- struct pilha* prox;
+ struct stack* next;
 };
 
-typedef struct pilha Pilha;
-Pilha* topo = NULL; 
-Pilha* base = NULL;
+typedef struct stack Stack;
+Stack* top = NULL; 
+Stack* base = NULL;
 
-Pilha* CriaNo()
+Stack* CreateNode()
 {
-   Pilha* pt = (Pilha*)malloc(sizeof(Pilha));
+   Stack* pt = (Stack*)malloc(sizeof(Stack));
    if(pt != NULL)
        return pt;
    return NULL;
 }
 
-int PilhaVazia()
+int EmptyStack()
 {
-  if (topo == NULL)
+  if (top == NULL)
    return 1;
   else
    return 0;
@@ -31,55 +31,55 @@ int PilhaVazia()
 
 
 
-void insereElemPilha()
+void InsertElement()
 {
 int elem;
-Pilha* x;
- if (PilhaVazia()) /* insere o primeiro elemento */
+Stack* x;
+ if (EmptyStack())
  {
-   x = CriaNo();
-   printf("Digite o valor a ser inserido\n");
+   x = CreateNode();
+   printf("Type the value to be inserted\n");
    scanf("%d",&elem);
    x->elem = elem;
-   x->prox = NULL;
-   topo = x;
+   x->next = NULL;
+   top = x;
    base = x;
  }
  else
  {
-   x = CriaNo();
-   printf("Digite o valor a ser inserido\n");
+   x = CreateNode();
+   printf("\nType the value to be inserted\n");
    scanf("%d",&elem);
    x->elem = elem;
-   x->prox = topo;
-   topo = x;
+   x->next = top;
+   top = x;
  }
 }
 
-void removeElemPilha()
+void RemoveElement()
 {
   int elem;
-  Pilha* x;
-  Pilha* y;
-  if (PilhaVazia())
+  Stack* x;
+  Stack* y;
+  if (EmptyStack())
    {
-   	printf("Pilha Vazia\n");
+   	printf("\nEmpty stack.\n");
    	return;
    } 
-   // pega o elemento do topo 
-   x=topo;
+
+   x=top;
    
-   if (x->prox == NULL) /* Pilha com um único elemento */
+   if (x->next == NULL)
    {
-   	 printf("Elemento %d removido\n",x->elem);
-	 topo = NULL;
+   	 printf("Element %d removed\n",x->elem);
+	 top = NULL;
 	 free(x);
    } 
    else
    {
-   	y = x->prox;
-	printf("Elemento %d removido\n",x->elem);
-	topo = y;
+   	y = x->next;
+	printf("Element %d removed\n",x->elem);
+	top = y;
 	free(x);
    } 
   return;
@@ -87,144 +87,144 @@ void removeElemPilha()
 
 
 
-void consultaElemPilha()
+void CheckElement()
 {
-  Pilha* x = topo;
-  int num, cont = 0;
+  Stack* x = top;
+  int num, count = 0;
   
-  printf("Qual elemento deseja procurar?\nElemento: ");
+  printf("What element are you looking for?\nElement: ");
   scanf("%d",&num);
   
   if(x != NULL){
   	
   	while(x != NULL){
   		if(x->elem == num){
-  			printf("\nElemento encontrado!\n");
-  			cont++;
+  			printf("\nElement foud!\n");
+  			count++;
 		  }
 
-		  x = x->prox;
+		  x = x->next;
 		  
 	  }
-	  if(cont == 0){
-	  	printf("\nElemento mmão encontrado!\n\n");
+	  if(count == 0){
+	  	printf("\nElement NOT found!\n\n");
 	  }
 	  
   	
   }else{
-  	printf("\nA pilha está vazia!\n");
+  	printf("\nthe stack is empty!\n");
   }
   
 }
 
-int retornaQuantidaElementos()
+int Quantity()
 {
-  Pilha* x = topo;
+  Stack* x = top;
   int qtd = 0;
   
   while(x != NULL){
   	qtd++;
-  	x = x->prox;
+  	x = x->next;
   }
 
-  printf("\nQuantidade de elementos na pilha: %d\n\n",qtd);
+  printf("\nQuantity of element in the stack: %d\n\n",qtd);
 }
 
 
-void somaElemPilha()
+void SummingElements()
 {
-  Pilha* x = topo;
-  int soma;
+  Stack* x = top;
+  int sum;
   
   if(x != NULL){
   	while(x != NULL){
-  	soma += x->elem;
+  	sum += x->elem;
   	
-  	x = x->prox;
+  	x = x->next;
   }
   
-  printf("\nSoma dos elementos da pilha: %d \n\n",soma);
+  printf("\nSum of the elemenst in the stack: %d \n\n",sum);
   }else{
-  	printf("\nA pilha está vazia!\n");
+  	printf("\nThe stack is empty!\n");
   }
   
 }
-void retornaMaiorElemPilha()
+void BiggestElement()
 {
-  Pilha* x = topo;
-  int maior_valor;
+  Stack* x = top;
+  int biggest_value;
   
   if(x != NULL){
   	
-  	maior_valor = x->elem;
+  	biggest_value = x->elem;
   	
   	while(x != NULL){
-  		if((x->elem) > maior_valor ){
-  			maior_valor = x->elem;
+  		if((x->elem) > biggest_value ){
+  			biggest_value = x->elem;
 		  }
 		  
-		  x = x->prox;
+		  x = x->next;
 		  
 	  }
 	  
-	  printf("\nMaior elemento da pilha: %d\n\n",maior_valor);
+	  printf("\nBiggest element in the stack: %d\n\n",biggest_value);
   	
   }else{
-  	printf("\nA pilha está vazia!\n");
+  	printf("\nThe stack is empty!\n");
   	
   }
   
 }
 
-void imprimePilha()
+void PrintStack()
 {
   int i;
-  Pilha* x;
-  x = topo;
-  if (PilhaVazia())
-    printf("Pilha Vazia\n");
+  Stack* x;
+  x = top;
+  if (EmptyStack())
+    printf("The stack is empty!\n");
   else
   {
    while(x!= NULL)
    {
   	 printf("%d -",x->elem);
-  	 x = x->prox;
+  	 x = x->next;
    }	
   printf("\n\n");
 }
 }
 
 int main() {
-int opc;
-Pilha* no;
-topo = NULL; /* inicialização */
+int opt;
+Stack* no;
+top = NULL;
 while (1)
 {
-  printf("1- Inserir elemento na pilha\n");
-  printf("2- Retornar tamanho da pilha\n");
-  printf("3- Remover elemento da pilha\n");
-  printf("4- Consultar elemento da pilha\n");
-  printf("5- Somar elementos da pilha\n");
-  printf("6- Retornar o maior elemento da pilha\n");
-  printf("7- Imprimir pilha\n");
-  printf("8 - FIM\n");
-  printf("Digite a opção desejada\n");
-  scanf("%d", &opc);
-  switch (opc)
+  printf("\n1- To insert an element in the stack\n");
+  printf("2- To get the size of the stack\n");
+  printf("3- To remove an element from the stack\n");
+  printf("4- Check an element in the stack\n");
+  printf("5- Sum the elements in the stack\n");
+  printf("6- To get the biggest value in the stack\n");
+  printf("7- To print the stack\n");
+  printf("8- To finish the program\n");
+  printf("Choice: ");
+  scanf("%d", &opt);
+  switch (opt)
   {
-  	case 1: insereElemPilha();
+  	case 1: InsertElement();
   	         break;
-  	case 2: retornaQuantidaElementos();
+  	case 2: Quantity();
   	         break;
-  	case 3: removeElemPilha();
+  	case 3: RemoveElement();
   	         break;  
-	case 4: consultaElemPilha();
+	case 4: CheckElement();
   	         break; 
-  	case 5: somaElemPilha();
+  	case 5: SummingElements();
   	         break;
-  	case 6: retornaMaiorElemPilha();
+  	case 6: BiggestElement();
   	         break;
-	case 7: imprimePilha();
+	case 7: PrintStack();
 	        break;
 	case 8: exit(0);
   }
